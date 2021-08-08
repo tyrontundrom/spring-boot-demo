@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 public class Adress extends BaseEntity {
 
+
     @Column(nullable = false)
     private String city;
 
@@ -25,4 +26,13 @@ public class Adress extends BaseEntity {
 
     @ManyToMany(mappedBy = "adresses")
     private List<User> users;
+
+    public Adress() {
+    }
+
+    public Adress(String city, String street, String postalCode) {
+        this.city = city;
+        this.street = street;
+        this.postalCode = postalCode;
+    }
 }
