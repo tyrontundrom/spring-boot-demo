@@ -5,6 +5,7 @@ import pl.sda.springbootdemo.domain.adress.Adress;
 import pl.sda.springbootdemo.domain.common.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,13 +17,7 @@ import java.util.List;
 public class User extends BaseEntity {
 
 
-    public User(String firstName, String lastName, String login, String password, boolean active) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.login = login;
-        this.password = password;
-        this.active = active;
-    }
+
 
     @Column(nullable = false)
     private String firstName;
@@ -35,13 +30,21 @@ public class User extends BaseEntity {
 
     private String password;
 
-    @Column(name = "is_active")
+    @Column(name = "is_activ")
     private boolean active;
+
+public User(String firstName, String lastName, String login, String password, boolean active) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.login = login;
+    this.password = password;
+    this.active = active;
+}
 
     @ManyToMany
     @JoinTable(name = "usersadreses",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "adress_id")})
-    private List<Adress> adresses;
+    private List<Adress> adresses = new ArrayList<>();
 
 }

@@ -1,4 +1,4 @@
-create table MyUsers
+create table myusers
 (
     id         bigint primary key AUTO_INCREMENT not null,
     first_name varchar(30) not null,
