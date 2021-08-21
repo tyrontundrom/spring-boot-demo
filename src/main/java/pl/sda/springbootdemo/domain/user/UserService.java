@@ -30,4 +30,8 @@ public class UserService {
     public User findByLoginWithAdresses(String login) {
         return userRepository.getUserFetchJoinAdresses(login);
     }
+
+    public User findById(Long id) {
+        return userRepository.getById(id);
+    }
 }

@@ -10,10 +10,11 @@ import java.util.List;
 @Setter
 public class UserDTO {
 
+    private Long id;
     private String firstName;
     private String lastName;
     private String login;
     private boolean active;
 
-    private List<AdressDTO> adressses;
+    private List<AdressDTO> adresses;
 }
