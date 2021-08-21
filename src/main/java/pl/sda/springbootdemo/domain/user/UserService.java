@@ -1,17 +1,30 @@
 package pl.sda.springbootdemo.domain.user;
 
 
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import pl.sda.springbootdemo.domain.adress.Adress;
+import pl.sda.springbootdemo.domain.adress.AdressRepository;
+
 import java.util.List;
 
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AdressRepository adressRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AdressRepository adressRepository) {
         this.userRepository = userRepository;
+        this.adressRepository = adressRepository;
     }
 
+    @Transactional
     public User save(User user) {
+        List<Adress> adresses = user.getAdresses();
+        if (CollectionUtils.isEmpty(adresses)) {
+            List<Adress> savedAdresses = adressRepository.saveAll(adresses);
+            user.setAdresses(savedAdresses);
+        }
         return userRepository.save(user);
     }
 

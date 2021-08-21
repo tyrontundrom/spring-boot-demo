@@ -1,0 +1,1 @@
+alter table myusers change column id_role role_id bigint;

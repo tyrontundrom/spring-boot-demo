@@ -3,6 +3,7 @@ package pl.sda.springbootdemo.domain.user;
 import lombok.*;
 import pl.sda.springbootdemo.domain.adress.Adress;
 import pl.sda.springbootdemo.domain.common.BaseEntity;
+import pl.sda.springbootdemo.domain.role.Role;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,6 +33,9 @@ public class User extends BaseEntity {
 
     @Column(name = "is_activ")
     private boolean active;
+
+    @ManyToOne
+    private Role role;
 
 public User(String firstName, String lastName, String login, String password, boolean active) {
     this.firstName = firstName;
