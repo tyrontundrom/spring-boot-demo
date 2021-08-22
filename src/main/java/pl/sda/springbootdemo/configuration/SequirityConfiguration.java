@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,6 +14,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true) // Włącza obsługę prefiksu ROLE_ potrzebne przy adnotacji @Secured
 public class SequirityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final DataSource dataSource;
@@ -33,8 +35,10 @@ public class SequirityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
-                .and().logout().permitAll()
-                .and().csrf().disable();
+                .and()
+                .logout().permitAll()
+                .and()
+                .csrf().disable();
 
     }
 
@@ -42,7 +46,7 @@ public class SequirityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .passwordEncoder(getEncoder()).dataSource(dataSource)
-                .usersByUsernameQuery("select login, password, is_active from myusers where login =?")
-                .authoritiesByUsernameQuery("select u.login, r.name from myusers u join roles r on r.id = u.role_id where u.login = ?");
+                .usersByUsernameQuery("select login, password, is_activ from myusers where login =?")
+                .authoritiesByUsernameQuery("select u.login, r.name from myusers u join roles r on u.role_id = r.id WHERE u.login = ?;");
     }
 }

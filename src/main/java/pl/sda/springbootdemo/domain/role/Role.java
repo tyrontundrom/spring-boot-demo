@@ -15,8 +15,10 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 public class Role extends BaseEntity {
+
     @Column(nullable = false)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum name;
 
     private String descripton;
 
