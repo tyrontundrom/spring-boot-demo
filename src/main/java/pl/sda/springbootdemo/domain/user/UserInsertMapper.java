@@ -2,8 +2,9 @@ package pl.sda.springbootdemo.domain.user;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import pl.sda.springbootdemo.domain.role.RoleMapper;
 
-@Mapper(uses = UserMapper.class)
+@Mapper(uses = {UserMapper.class, RoleMapper.class})
 public interface UserInsertMapper {
     UserInsertMapper INSTANCE = Mappers.getMapper(UserInsertMapper.class);
 

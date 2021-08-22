@@ -3,6 +3,7 @@ package pl.sda.springbootdemo.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -35,5 +36,13 @@ public class SequirityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().logout().permitAll()
                 .and().csrf().disable();
 
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication()
+                .passwordEncoder(getEncoder()).dataSource(dataSource)
+                .usersByUsernameQuery("select login, password, is_active from myusers where login =?")
+                .authoritiesByUsernameQuery("select u.login, r.name from myusers u join roles r on r.id = u.role_id where u.login = ?");
     }
 }
