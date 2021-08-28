@@ -2,7 +2,9 @@ package pl.sda.springbootdemo.web.controlers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.sda.springbootdemo.domain.user.User;
 import pl.sda.springbootdemo.domain.user.UserService;
@@ -24,5 +26,11 @@ public class UsersController {
         List<User> allUsers = userService.getAll();
         model.addAttribute("users", allUsers);
         return "usersList";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        userService.delete(id);
+        return "redirect:userslist";
     }
 }

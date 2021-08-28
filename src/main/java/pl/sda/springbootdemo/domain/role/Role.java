@@ -13,7 +13,6 @@ import java.util.List;
 @Table(name = "roles")
 @Getter
 @Setter
-@ToString(callSuper = true)
 public class Role extends BaseEntity {
 
     @Column(nullable = false)
@@ -24,4 +23,12 @@ public class Role extends BaseEntity {
 
     @OneToMany(mappedBy = "role")
     private List<User> users;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "descripton='" + descripton + '\'' +
+                ", users=" + users +
+                '}';
+    }
 }
