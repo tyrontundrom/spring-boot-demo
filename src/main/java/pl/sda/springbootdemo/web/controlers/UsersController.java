@@ -1,5 +1,6 @@
 package pl.sda.springbootdemo.web.controlers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,5 +33,11 @@ public class UsersController {
     public String delete(@PathVariable Long id) {
         userService.delete(id);
         return "redirect:userslist";
+    }
+
+    @GetMapping("/{id}")
+    public String edit(@PathVariable Long id, Model model) {
+         model.addAttribute("user",userService.findById(id));
+         return "editUser";
     }
 }
